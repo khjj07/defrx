@@ -1,0 +1,11 @@
+local defrx = require "defrx.defrx"
+function init(self)
+	self.a = defrx.create_reactive_property(10, "msg")
+	defrx.observe(self, "msg", function(self, message_id, message, sender)
+		print(message.value)
+	end)
+end
+
+function on_message(self, message_id, message, sender)
+	defrx.on_message(self, message_id, message, sender)
+end
