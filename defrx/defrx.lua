@@ -65,6 +65,19 @@ function R.notify(message_id, data)
 	end
 end
 
+function R.create_reactive_table(message_id)
+	observables[message_id] = observables[message_id] or {observers = {} }
+	local prop = {table={}}
+	function prop:insert(value)
+		table.insert(prop.table, value)
+		R.notify(message_id, {value=prop.table})
+	end
+	function prop:remove(pos)
+		table.remove(prop.table,pos)
+		R.notify(message_id, {value=prop.table})
+	end
+	return prop
+end
 
 function R.create_reactive_property(value,message_id)
 	observables[message_id] = observables[message_id] or {observers = {} }
